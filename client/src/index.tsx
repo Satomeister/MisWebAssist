@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import './index.css';
+import 'antd/dist/antd.css';
 
 import App from './App';
+import RootStore from './store';
+
+const store = RootStore.create({});
+
+export const StoreContext = createContext(store);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <StoreContext.Provider value={store}>
+      <App />
+    </StoreContext.Provider>
+  </Router>,
   document.getElementById('root')
 );
