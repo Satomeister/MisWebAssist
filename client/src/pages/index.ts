@@ -1,1 +1,1 @@
-export {default as Patients} from './Patients'
+export {default as PatientsList} from './PatientsList'

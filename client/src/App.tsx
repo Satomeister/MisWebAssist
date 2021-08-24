@@ -3,12 +3,12 @@ import { Route, Switch } from "react-router-dom";
 
 import "./App.css";
 
-import { Patients } from "./pages";
+import { PatientsList } from "./pages";
 
 const App = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Patients} />
+      <Route exact path="/" component={PatientsList} />
     </Switch>
   );
 };

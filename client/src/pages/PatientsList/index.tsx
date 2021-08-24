@@ -6,12 +6,14 @@ import { observer } from 'mobx-react-lite';
 
 import useStore from '../../hooks/useStore';
 import { LoadingStatus } from '../../store/store';
+import { IPatient } from '../../store/patients';
+import { useHistory } from 'react-router-dom';
 
 const { Option } = Select;
 
 const columns = [
   {
-    title: 'patientID',
+    title: 'ID Пацієнта',
     dataIndex: 'patientID',
     key: 'patientID',
   },
@@ -29,6 +31,7 @@ const columns = [
 
 const Patients: FC = () => {
   const { patientsStore } = useStore();
+  const history = useHistory();
 
   const isLoading = patientsStore.loadingStatus === LoadingStatus.LOADING;
 
@@ -50,6 +53,12 @@ const Patients: FC = () => {
         await patientsStore.getById(value);
         break;
     }
+  };
+
+  const onPatientClick = (patient: IPatient) => {
+    return () => {
+      history.push(`patients/${patient.uuid}`);
+    };
   };
 
   return (
@@ -97,6 +106,11 @@ const Patients: FC = () => {
           columns={columns}
           locale={{ emptyText: 'Введіть значення в пошуці' }}
           pagination={false}
+          onRow={(record, _) => {
+            return {
+              onClick: onPatientClick(record),
+            };
+          }}
         />
       )}
     </div>
