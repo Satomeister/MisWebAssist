@@ -1,12 +1,12 @@
 import { flow, Instance, types } from 'mobx-state-tree';
 import { PatientsApi } from '../api/patients';
-import { LoadingStatus } from './store';
+import { LoadingStatus } from './types';
 
-const Patient = types.model('Patient', {
-  uuid: types.string,
+export const Patient = types.model('Patient', {
   fullName: types.string,
-  phone: types.number,
+  phones: types.string,
   patientID: types.number,
+  birthDate: types.string,
 });
 
 export interface IPatient extends Instance<typeof Patient> {}
@@ -17,6 +17,7 @@ const PatientsStore = types
     loadingStatus: types.enumeration<LoadingStatus>(
       Object.values(LoadingStatus)
     ),
+    errorMessage: types.optional(types.string, ''),
   })
   .actions((self) => {
     const getByName = flow(function* (name: string) {
@@ -25,6 +26,7 @@ const PatientsStore = types
         self.patients = yield PatientsApi.getByName(name);
         self.loadingStatus = LoadingStatus.SUCCESS;
       } catch (e) {
+        self.errorMessage = e.response.data;
         self.loadingStatus = LoadingStatus.ERROR;
       }
     });
@@ -35,6 +37,7 @@ const PatientsStore = types
         self.patients = yield PatientsApi.getByPhone(phone);
         self.loadingStatus = LoadingStatus.SUCCESS;
       } catch (e) {
+        self.errorMessage = e.response.data;
         self.loadingStatus = LoadingStatus.ERROR;
       }
     });
@@ -45,6 +48,7 @@ const PatientsStore = types
         self.patients = yield PatientsApi.getById(id);
         self.loadingStatus = LoadingStatus.SUCCESS;
       } catch (e) {
+        self.errorMessage = e.response.data;
         self.loadingStatus = LoadingStatus.ERROR;
       }
     });
