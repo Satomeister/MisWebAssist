@@ -1,34 +1,24 @@
-import axios from '../core/axios';
+import axios from "axios";
 
-import { IPatient } from '../store/patients';
-
-const baseUrl = '/mis/patients';
+const baseUrl = '/patients';
 
 export const PatientsApi = {
   getAll: async () => {
-    return await axios.get<IPatient[]>(baseUrl + '/');
+    return await axios.get(baseUrl + '/');
   },
+
   getByName: async (name: string) => {
-    return axios.get<IPatient[]>(baseUrl + `?name=${name}`);
-    // const pr = new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     resolve([
-    //       {
-    //         key: '1',
-    //         uuid: 'wef',
-    //         fullName: 'types.string',
-    //         phone: 23,
-    //         patientID: 324,
-    //       },
-    //     ]);
-    //   }, 3000);
-    // });
-    // return await pr;
+    const { data } = await axios.get(baseUrl + `?name=${name}`);
+    return data;
   },
+
   getByPhone: async (phone: string) => {
-    return await axios.get<IPatient[]>(baseUrl + `?phone=${phone}`);
+    const { data } = await axios.get(baseUrl + `?phone=${phone}`);
+    return data;
   },
+
   getById: async (id: string) => {
-    return await axios.get<IPatient[]>(baseUrl + `?patient-id=${id}`);
+    const { data } = await axios.get(baseUrl + `?patient-id=${id}`);
+    return data;
   },
 };
