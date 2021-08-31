@@ -1,0 +1,30 @@
+.modalWrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .1);
+    z-index: 2;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    padding: 10px;
+    border-radius: 10px;
+    background: white;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 220px;
+    margin-top: 20px;
+}
