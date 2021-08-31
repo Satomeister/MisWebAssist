@@ -1,15 +1,46 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import "./App.css";
+import './App.css';
 
-import { PatientsList } from "./pages";
+import {
+  CreateDocument,
+  Document,
+  EditDocument,
+  Patient,
+  PatientsList,
+} from './pages';
 
 const App = () => {
+
   return (
-    <Switch>
-      <Route exact path="/" component={PatientsList} />
-    </Switch>
+     <Switch>
+       <Route
+         exact
+         path={['/', '/patients']}
+         component={PatientsList}
+       />
+       <Route
+         exact
+         path="/patients/:patientID/documents"
+         component={Patient}
+       />
+       <Route
+         exact
+         path='/patients/:patientID/documents/create'
+         component={CreateDocument}
+       />
+       <Route
+         exact
+         path="/patients/:patientID/documents/:documentID"
+         component={Document}
+       />
+       <Route
+         exact
+         path="/patients/:patientID/documents/:documentID/edit"
+         component={EditDocument}
+       />
+     </Switch>
   );
 };
 

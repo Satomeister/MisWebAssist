@@ -1,0 +1,29 @@
+.camera {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+/*.buttonBlock {*/
+/*    position: fixed;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    height: 50px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    padding: 0 20px;*/
+/*    border: 1px solid #8c8c8c;*/
+/*    background: rgba(217, 217, 217, .9);*/
+/*    z-index: 1;*/
+/*}*/
+
+.capture {
+    background: #595959;
+    color: #ffffff;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}

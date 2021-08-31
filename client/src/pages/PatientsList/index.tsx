@@ -1,13 +1,15 @@
 import { FC, useState } from 'react';
-import { Result, Select, Table } from 'antd';
-import Search from 'antd/lib/input/Search';
+import { useHistory } from 'react-router-dom';
+
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
+import { Result, Select, Table } from 'antd';
+import Search from 'antd/lib/input/Search';
+
 import useStore from '../../hooks/useStore';
-import { LoadingStatus } from '../../store/store';
+import { LoadingStatus } from '../../store/types';
 import { IPatient } from '../../store/patients';
-import { useHistory } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -24,8 +26,8 @@ const columns = [
   },
   {
     title: 'Номер телефону',
-    dataIndex: 'phone',
-    key: 'phone',
+    dataIndex: 'phones',
+    key: 'phones',
   },
 ];
 
@@ -37,7 +39,7 @@ const Patients: FC = () => {
 
   const [type, setType] = useState<string>('name');
 
-  const onSearch = async (value: string) => {
+  const handleSearch = async (value: string) => {
     if (!value.trim()) {
       return false;
     }
@@ -55,17 +57,15 @@ const Patients: FC = () => {
     }
   };
 
-  const onPatientClick = (patient: IPatient) => {
-    return () => {
-      history.push(`patients/${patient.uuid}`);
-    };
+  const handleClick = (patient: IPatient) => {
+    history.push(`/patients/${patient.patientID}/documents`);
   };
 
   return (
     <div>
       <Search
         placeholder="Пошук пацієнта"
-        onSearch={onSearch}
+        onSearch={handleSearch}
         type={type === 'name' ? 'text' : 'number'}
         loading={isLoading}
         disabled={isLoading}
@@ -90,9 +90,8 @@ const Patients: FC = () => {
       />
       {patientsStore.loadingStatus === LoadingStatus.ERROR ? (
         <Result
-          status="500"
-          title="500"
-          subTitle="Sorry, something went wrong."
+          status="error"
+          subTitle={`${patientsStore.errorMessage}` || 'Виникла помилка'}
         />
       ) : (
         <Table
@@ -100,7 +99,7 @@ const Patients: FC = () => {
           loading={isLoading}
           dataSource={toJS(patientsStore.patients).map((p) => {
             // @ts-ignore
-            p.key = p.uuid;
+            p.key = p.patientID;
             return p;
           })}
           columns={columns}
@@ -108,7 +107,7 @@ const Patients: FC = () => {
           pagination={false}
           onRow={(record, _) => {
             return {
-              onClick: onPatientClick(record),
+              onClick: () => handleClick(record),
             };
           }}
         />
