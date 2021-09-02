@@ -1,7 +1,6 @@
 import { FC, TouchEvent, useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { usePdf } from '@mikecousins/react-pdf';
 
 import { Button, Card, Image } from 'antd';
 import Meta from 'antd/lib/card/Meta';
@@ -18,7 +17,6 @@ import {
   PdfViewer,
 } from '../../components';
 import { isPdfFile } from '../../utils';
-import { set } from 'mobx';
 
 const Document: FC = () => {
   const params = useParams<{ patientID: string; documentID: string }>();
@@ -26,18 +24,10 @@ const Document: FC = () => {
   const { documentsStore } = useStore();
 
   const blockRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef(null);
 
   const [swipeWidth, setSwipeWidth] = useState(0);
   const [deleteDocumentModal, setDeleteDocumentModal] = useState(false);
   const [pdfFull, setPdfFull] = useState(false);
-  const [page, setPage] = useState(1);
-
-  const { pdfDocument } = usePdf({
-    file: 'https://arxiv.org/pdf/quant-ph/0410100.pdf',
-    page,
-    canvasRef,
-  });
 
   useEffect(() => {
     if (
@@ -54,7 +44,7 @@ const Document: FC = () => {
     }
   }, [documentsStore.patient, params]);
 
-  const handleClick = (e: TouchEvent<HTMLDivElement>) => {
+  const handleTouch = (e: TouchEvent<HTMLDivElement>) => {
     if (!blockRef.current || pdfFull) {
       return false;
     }
@@ -98,7 +88,7 @@ const Document: FC = () => {
                     }
                   : undefined
               }
-              onTouchStart={handleClick}
+              onTouchStart={handleTouch}
             >
               <Card
                 className={styles.card}
@@ -112,7 +102,6 @@ const Document: FC = () => {
                       file={documentsStore.chosen.url}
                     />
                   ) : (
-                    //{/*`http://192.168.88.12/mis_test2/hs/web/patients/70026/documents/94aa92f1-c185-42ea-9bcb-5e14fb3aa600/94aa92f1-c185-42ea-9bcb-5e14fb3aa600.pdf`*/}
                     <Image
                       className={'image'}
                       width={'auto'}
@@ -128,8 +117,8 @@ const Document: FC = () => {
                 />
               </Card>
 
-              {
-                !pdfFull && <div className={styles.buttons}>
+              {!pdfFull && (
+                <div className={styles.buttons}>
                   <Button
                     className={styles.button}
                     onClick={() => setDeleteDocumentModal(true)}
@@ -147,7 +136,7 @@ const Document: FC = () => {
                     Редагувати
                   </Button>
                 </div>
-              }
+              )}
             </div>
 
             <BottomButtons
@@ -174,12 +163,6 @@ const Document: FC = () => {
         isOpen={deleteDocumentModal}
         onClose={() => setDeleteDocumentModal(false)}
       />
-      {/*{pdfFull && !!documentsStore.chosen && (*/}
-      {/*  <PdfViewer*/}
-      {/*    file={documentsStore.chosen.url}*/}
-      {/*    onClose={() => setPdfFull(false)}*/}
-      {/*  />*/}
-      {/*)}*/}
     </>
   );
 };

@@ -1,14 +1,11 @@
-// 192.168.88.12:80/mis_test2/hs/web_api/
-// http://192.168.88.12/mis_test2/hs/web/
-// "proxy": "http://192.168.88.12:80/mis_test2/hs/web",
 import axios from "axios";
 
-const baseUrl = '/patients';
+const baseurl = '/patients'
 
 export const DocumentsApi = {
   getDocuments: async (patientID: string) => {
     const { data } = await axios.get(
-      baseUrl + `/${patientID}/documents`
+      baseurl + `/${patientID}/documents`
     );
 
     return data;
@@ -16,7 +13,7 @@ export const DocumentsApi = {
 
   getById: async (patientID: string, documentID: string) => {
     const { data } = await axios.get(
-      baseUrl + `/${patientID}/documents/${documentID}`
+      baseurl + `/${patientID}/documents/${documentID}`
     );
     return data;
   },
@@ -33,7 +30,7 @@ export const DocumentsApi = {
     formData.append('date', date);
     formData.append('description', desc);
 
-    const {data} = await axios.post(baseUrl + `/${patientID}/documents/`, formData, {
+    const {data} = await axios.post(baseurl + `/${patientID}/documents/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -49,16 +46,18 @@ export const DocumentsApi = {
     desc: string
   ) => {
     const formData = new FormData();
+
     formData.append('date', date);
     formData.append('description', desc);
+
     await axios.put(
-      baseUrl + `/${patientID}/documents/${documentID}`,
+      baseurl + `/${patientID}/documents/${documentID}`,
       formData,
       { headers: { 'Content-Type': 'multipart/form-data' } }
     );
   },
 
   delete: async (patientID: string, documentID: string) => {
-    await axios.delete(baseUrl + `/${patientID}/documents/${documentID}`);
+    await axios.delete(baseurl + `/${patientID}/documents/${documentID}`);
   },
 };

@@ -5,3 +5,5 @@ export const getDateString = (date: Date) => {
 export const isPdfFile = (file: string) => {
   return file.slice(-3) === 'pdf'
 }
+
+// 193.201.175.41 or md.xline.net.ua

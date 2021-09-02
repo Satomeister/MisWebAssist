@@ -37,7 +37,7 @@ const DocumentsList: FC = () => {
             isPdfFile(item.url) ? (
               <div className={styles.pdfFile}>PDF File</div>
             ) : (
-              <img height={140} alt={item.description} src={item.url} />
+              <img height={140} src={item.url} />
             )
           }
         >

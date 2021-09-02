@@ -74,8 +74,6 @@ const EditDocument: FC = () => {
     <div style={{ paddingBottom: 55 }}>
       <div style={{ fontSize: 16 }}>
         <div style={{ marginBottom: 10 }}>
-          <b>Дата: </b>
-          <span>{dataPickerValue && getDateString(dataPickerValue)} </span>
           <Button
             size="small"
             onClick={() => {
@@ -85,9 +83,10 @@ const EditDocument: FC = () => {
           >
             Редагувати
           </Button>
+          <b>Дата: </b>
+          <span>{dataPickerValue && getDateString(dataPickerValue)} </span>
         </div>
         <div>
-          <b>Опис: </b> <span>{textareaValue} </span>
           <Button
             size="small"
             onClick={() => {
@@ -97,6 +96,7 @@ const EditDocument: FC = () => {
           >
             Редагувати
           </Button>
+          <b>Опис: </b> <span>{textareaValue} </span>
         </div>
         <div style={{ marginTop: 20 }}>
           {isDateEdit && (
@@ -129,6 +129,9 @@ const EditDocument: FC = () => {
           },
           {
             title: 'Скасувати',
+            disabled:
+              documentsStore.editDocumentLoadingStatus ===
+              LoadingStatus.LOADING,
             onClick: () => {
               history.push(
                 `/patients/${params.patientID}/documents/${params.documentID}`

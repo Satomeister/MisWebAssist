@@ -47,22 +47,20 @@ const Patient: FC = () => {
     <>
       {documentsStore.loadingStatus !== LoadingStatus.LOADING &&
       documentsStore.patient ? (
-        <div style={{ marginTop: 80, paddingBottom: 50 }}>
+        <div className={styles.container} >
           <PatientInfo />
-          <Title level={2} style={{ textAlign: 'center' }}>
+          <Title level={2} className={styles.title}>
             Документи
           </Title>
           <DocumentsList />
-          <div className={styles.buttonBlock}>
-            <input
-              ref={cameraInputRef}
-              onInput={handleCameraInputChange}
-              hidden
-              type="file"
-              accept="image/*,application/pdf"
-              capture="camera"
-            />
-          </div>
+          <input
+            ref={cameraInputRef}
+            onInput={handleCameraInputChange}
+            hidden
+            type="file"
+            accept="image/*,application/pdf"
+            capture="camera"
+          />
           <BottomButtons
             buttons={[
               {

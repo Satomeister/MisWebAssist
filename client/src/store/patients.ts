@@ -26,7 +26,9 @@ const PatientsStore = types
         self.patients = yield PatientsApi.getByName(name);
         self.loadingStatus = LoadingStatus.SUCCESS;
       } catch (e) {
-        self.errorMessage = e.response.data;
+        if (e.response.status === 400) {
+          self.errorMessage = e.response.data;
+        }
         self.loadingStatus = LoadingStatus.ERROR;
       }
     });
@@ -37,7 +39,9 @@ const PatientsStore = types
         self.patients = yield PatientsApi.getByPhone(phone);
         self.loadingStatus = LoadingStatus.SUCCESS;
       } catch (e) {
-        self.errorMessage = e.response.data;
+        if (e.response.status === 400) {
+          self.errorMessage = e.response.data;
+        }
         self.loadingStatus = LoadingStatus.ERROR;
       }
     });
@@ -48,7 +52,9 @@ const PatientsStore = types
         self.patients = yield PatientsApi.getById(id);
         self.loadingStatus = LoadingStatus.SUCCESS;
       } catch (e) {
-        self.errorMessage = e.response.data;
+        if (e.response.status === 400) {
+          self.errorMessage = e.response.data;
+        }
         self.loadingStatus = LoadingStatus.ERROR;
       }
     });

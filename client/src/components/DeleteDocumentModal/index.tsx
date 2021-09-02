@@ -35,7 +35,7 @@ const DeleteDocumentModal: FC<DeleteDocumentModalProps> = ({
       history.push(`/patients/${params.patientID}/documents`);
       documentsStore.setDeleteDocumentLoadingStatus(LoadingStatus.NEVER);
     }
-  }, [documentsStore.deleteDocumentLoadingStatus]);
+  }, [documentsStore.deleteDocumentLoadingStatus, history, params.patientID]);
 
   return (
     <>

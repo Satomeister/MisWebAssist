@@ -14,6 +14,8 @@
     "antd": "^4.16.13",
     "axios": "^0.21.1",
     "date-fns": "^2.23.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "mobx": "^6.3.2",
     "mobx-react-lite": "^3.2.0",
     "mobx-state-tree": "^5.0.2",
@@ -28,7 +30,8 @@
   },
   "proxy": "http://192.168.88.12:80/mis_test2/hs/web",
   "scripts": {
-    "start": "react-scripts start --host 0.0.0.0",
+    "start:prod": "node server.js",
+    "start:dev": "react-scripts start --host 0.0.0.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

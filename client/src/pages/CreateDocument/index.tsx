@@ -31,7 +31,7 @@ const CreateDocument: FC = () => {
       history.push(`/patients/${params.patientID}/documents`);
       documentsStore.setCreateDocumentLoadingStatus(LoadingStatus.NEVER);
     }
-  }, [documentsStore.createDocumentLoadingStatus]);
+  }, [documentsStore.createDocumentLoadingStatus, history, params.patientID]);
 
   const handleSave = () => {
     (async () => {
@@ -74,6 +74,9 @@ const CreateDocument: FC = () => {
           },
           {
             title: 'Скасувати',
+            disabled:
+              documentsStore.createDocumentLoadingStatus ===
+              LoadingStatus.LOADING,
             onClick: () => {
               history.push(`/patients/${params.patientID}/documents`);
             },
